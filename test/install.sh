@@ -21,6 +21,7 @@
 #Script to install all necessary tools.
 #
 
+
 if [ "${#}" -lt "2" ]; then
   echo "This script takes addresses of Ubuntu instances to install "
   echo "YCSB and other softwares for the test environment."
@@ -37,6 +38,16 @@ install_ssh_policy()
 {
   # Grand root access
   ssh ubuntu@$1 "sudo cp /home/ubuntu/.ssh/authorized_keys /root/.ssh/"
+}
+
+# Install Java environment
+install_java_env()
+{
+  # Install Java
+  ssh root@$1 "apt-get update \
+  && aptitude -y install openjdk-6-jdk \
+  && echo 'export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-amd64' | cat - ~/.bashrc > ~/.bashrc_r \
+  && mv ~/.bashrc_r ~/.bashrc"
 }
 
 # Install YCSB
@@ -65,8 +76,9 @@ install_ycsb()
 
 setup_ycsb_inst()
 {
-  # Install SSH policy, Java runtime environment, Faban system
+  # Install SSH policy, Java runtime environment
   install_ssh_policy $1
+  install_java_env $1
 
   # Install YCSB database
   install_ycsb $1 "$2"

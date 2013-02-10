@@ -63,7 +63,7 @@ install_cassandra()
 
 setup_cassandra_inst()
 {
-  # Install SSH policy, Java runtime environment, Faban system
+  # Install SSH policy
   install_ssh_policy $1
 
   # Install Cassandra database
