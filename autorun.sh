@@ -48,7 +48,7 @@ check_errs()
 CASSANDRA_INSTANCE=("CASSANDRA-1.compute.amazonaws.com" \
     			"CASSANDRA-2.compute.amazonaws.com" \
     			"CASSANDRA-3.compute.amazonaws.com")
-YCSB=YCSB.compute.amazonaws.com
+YCSB="YCSB.compute.amazonaws.com"
 
 echo "Deployments start at `date`"
 rm ~/.ssh/known_hosts > /dev/null 2>&1
@@ -60,15 +60,14 @@ done
 
 echo "Start installing Cassandra instance (1/3)"
 cd "$LOCATION/install" && ./install.sh "$cassandra_instance_all" > /dev/null 2>&1
-check_errs $? "Install instances failed."
+check_errs $? "Install Cassandra instances failed."
 
 echo "Start deploying Cassandra instance (2/3)"
 cd "$LOCATION/deploy" && ./deploy.sh "$cassandra_instance_all" > /dev/null 2>&1
-check_errs $? "Deploy instances failed."
+check_errs $? "Deploy Cassandra instances failed."
 
-echo "Start installing ycsb instance (2/3)"
-cd "$LOCATION/test" && ./install "$YCSB" > /dev/null 2>&1
-check_errs $? "Deploy instances failed."
+echo "Start installing YCSB instance (3/3)"
+cd "$LOCATION/test" && ./install.sh "$YCSB" "$cassandra_instance_all" > /dev/null 2>&1
+check_errs $? "Install YCSB instances failed."
 
 echo "Experiments end at `date`"
-

@@ -42,21 +42,23 @@ install_ssh_policy()
 # Install YCSB
 install_ycsb()
 {
-  for cassandra in $CASSANDRA_INSTANCE; do
+  for cassandra in $2; do
     hosts=$hosts"$cassandra,"
   done
   hosts=${hosts%?}
 
   # Download YCSB
-  ssh root@$1 "wget https://github.com/downloads/brianfrankcooper/YCSB/ycsb-0.1.4.tar.gz --no-check-certificate"
-  ssh root@$1 "tar xfvz ycsb-0.1.4.tar.gz"
-  ssh root@$1 "rm ycsb-0.1.4.tar.gz"
+  ssh root@$1 "rm -Rf ycsb-* \
+  && wget https://github.com/downloads/brianfrankcooper/YCSB/ycsb-0.1.4.tar.gz --no-check-certificate \
+  && tar xfvz ycsb-0.1.4.tar.gz \
+  && rm ycsb-0.1.4.tar.gz"
 
   # Download bindings
-  ssh root@$1 "wget http://archive.apache.org/dist/cassandra/1.2.1/apache-cassandra-1.2.1-bin.tar.gz"
-  ssh root@$1 "tar xfvz apache-cassandra-1.2.1-bin.tar.gz"
-  ssh root@$1 "cp ~/apache-cassandra-1.2.1/lib/*.jar ~/ycsb-0.1.4/cassandra-binding/."
-  ssh root@$1 "rm -Rf apache-cassandra-1.2.1*"
+  ssh root@$1 "rm -Rf apache-cassandra- \
+  && wget http://archive.apache.org/dist/cassandra/1.2.1/apache-cassandra-1.2.1-bin.tar.gz \
+  && tar xfvz apache-cassandra-1.2.1-bin.tar.gz \
+  && cp ~/apache-cassandra-1.2.1/lib/*.jar ~/ycsb-0.1.4/cassandra-binding/. \
+  && rm -Rf apache-cassandra-1.2.1*"
   ssh root@$1 "echo \"hosts=$hosts\" >> ycsb-0.1.4/workloads/workloada"
   ssh root@$1 "chmod +x ycsb-0.1.4/bin/ycsb"
 }
@@ -67,11 +69,8 @@ setup_ycsb_inst()
   install_ssh_policy $1
 
   # Install YCSB database
-  install_ycsb $1
+  install_ycsb $1 "$2"
 }
 
 # Setup YCSB instance
-  setup_cassandra_inst $HOST > /dev/null &
-done
-wait
-
+setup_ycsb_inst "$YCSB" "$CASSANDRA_INSTANCE" > /dev/null
