@@ -48,9 +48,9 @@ install_cassandra()
   ssh root@$1 "echo \"deb http://www.apache.org/dist/cassandra/debian 12x main\" >> /etc/apt/sources.list"
   ssh root@$1 "echo \"deb-src http://www.apache.org/dist/cassandra/debian 12x main\" >> /etc/apt/sources.list"
   # Install public keys for Cassandra
-  ssh root@$1 "gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D \
+  ssh root@$1 "gpg --keyserver keyserver.ubuntu.com --recv-keys F758CE318D77295D \
   && gpg --export --armor F758CE318D77295D | apt-key add - \
-  && gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00 \
+  && gpg --keyserver keyserver.ubuntu.com --recv-keys 2B5C1B00 \
   && gpg --export --armor 2B5C1B00 | apt-key add -"
   # Install Cassandra
   ssh root@$1 "apt-get update \
