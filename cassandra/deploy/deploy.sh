@@ -26,7 +26,7 @@ if [ "${#}" -lt "1" ]; then
   echo "to deploy the test environment."
   echo ""
   echo "Usage:"
-  echo "   ${0} [Faban]"
+  echo "   ${0} [Cassandra]"
   exit 0
 fi
 
