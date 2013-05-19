@@ -65,7 +65,7 @@ install_ycsb()
   && rm ycsb-0.1.4.tar.gz"
 
   # Download bindings
-  ssh root@$1 "rm -Rf apache-cassandra- \
+  ssh root@$1 "rm -Rf apache-cassandra-* \
   && wget http://archive.apache.org/dist/cassandra/1.2.1/apache-cassandra-1.2.1-bin.tar.gz \
   && tar xfvz apache-cassandra-1.2.1-bin.tar.gz \
   && cp ~/apache-cassandra-1.2.1/lib/*.jar ~/ycsb-0.1.4/cassandra-binding/. \
