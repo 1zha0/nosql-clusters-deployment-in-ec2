@@ -1,12 +1,11 @@
-************************************************************
-*                                                          *
-*       Cassandra Cluster Deployment in EC2                *
-*                                                          *
-************************************************************
+NoSQL Database Cluster Deployment in EC2
+================================
 
-A suite of scripts for deploying Cassandra clusters in EC2 
-instances.
+This ia a suite of scripts for deploying NoSQL database clusters in EC2 instances. Currently supports scripts of:
 
-                                                   Liang
+* Cassandra clusters in EC2 instances: As the whole project is started with configuring a test environment for YCSB benchmark, therefore, a setup of YCSB is also included in the script.
+* MongoDB clusters in EC2 instances.
 
-                                               Feb 07, 2013
+Liang
+
+Feb 07, 2013
