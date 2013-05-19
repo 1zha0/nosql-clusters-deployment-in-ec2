@@ -66,6 +66,20 @@ echo "Start deploying MongoDB instance (2/3)"
 cd "$LOCATION/deploy" && ./deploy.sh "$mongodb_instance_all" > /dev/null 2>&1
 check_errs $? "Deploy MongoDB instances failed."
 
+# Something extra
+num_agent=0
+for agent in $mongodb_instance_all; do
+  num_agent=$[$num_agent+1]
+  if [ "$num_agent" -eq "1" ]; then
+    master_mongodb=`ssh root@$agent "curl http://instance-data/latest/meta-data/public-hostname"`
+  fi
+done
+echo "====================== NOTE ======================"
+echo "Please open a new Terminal, manually execute the following commands before processing futher. For detailed explainations, please check the comments in deploy.sh script."
+echo "1. ssh root@$master_mongodb"
+echo "2. mongo < ~/replSet.js"
+read -p "Press [Enter] key if the two commands are executed successfully..."
+
 echo "Start installing YCSB instance (3/3)"
 cd "$LOCATION/test" && ./install.sh "$YCSB" "$mongodb_instance_all" > /dev/null 2>&1
 check_errs $? "Install YCSB instances failed."
