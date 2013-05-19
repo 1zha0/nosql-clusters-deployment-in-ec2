@@ -75,4 +75,3 @@ for cassandra in $CASSANDRA_INSTANCE; do
   setup_cassandra_inst $cassandra > /dev/null &
 done
 wait
-

@@ -73,4 +73,3 @@ for agent in $CASSANDRA_INSTANCE; do
   deploy_cassandra $agent $num_agent $seed_cassandra &
 done
 wait
-
